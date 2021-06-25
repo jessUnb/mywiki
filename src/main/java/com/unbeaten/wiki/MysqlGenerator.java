@@ -51,9 +51,12 @@ public class MysqlGenerator {
         strategyConfig.setEntityLombokModel(true);
         //生成 @RestController 控制器
         strategyConfig.setRestControllerStyle(true);
-
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
+
+//        strategyConfig.setInclude("ebook");
+
         autoGenerator.setStrategy(strategyConfig);
+
 
         autoGenerator.execute();
 
