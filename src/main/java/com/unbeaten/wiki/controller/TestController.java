@@ -1,7 +1,7 @@
 package com.unbeaten.wiki.controller;
 
 import com.unbeaten.wiki.domain.Test;
-import com.unbeaten.wiki.service.TestService;
+import com.unbeaten.wiki.service.impl.TestServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class TestController {
     private String testHello;
 
     @Resource
-    private TestService testService;
+    private TestServiceImpl testService;
 
     @GetMapping("/hello")
     public String hello() {

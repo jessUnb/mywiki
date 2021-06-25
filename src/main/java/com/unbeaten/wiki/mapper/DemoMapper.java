@@ -1,7 +1,7 @@
 package com.unbeaten.wiki.mapper;
 
-import com.unbeaten.wiki.domain.Demo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.unbeaten.wiki.domain.Demo;
 
 /**
  * <p>

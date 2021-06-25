@@ -2,7 +2,6 @@ package com.unbeaten.wiki.serviceImpl;
 
 import com.unbeaten.wiki.domain.Test;
 import com.unbeaten.wiki.mapper.TestMapper;
-import com.unbeaten.wiki.service.TestService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
