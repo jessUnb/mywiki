@@ -1,8 +1,9 @@
 package com.unbeaten.wiki.controller;
 
 
-import com.unbeaten.wiki.domain.Ebook;
+import com.unbeaten.wiki.req.EbookReq;
 import com.unbeaten.wiki.resp.CommonResp;
+import com.unbeaten.wiki.resp.EbookResp;
 import com.unbeaten.wiki.service.impl.EbookServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,9 @@ public class EbookController {
     private EbookServiceImpl ebookService;
 
     @GetMapping("/list")
-    public CommonResp list() {
-        List<Ebook> list=ebookService.list();
-        CommonResp<List<Ebook>> resp = new CommonResp<>();
+    public CommonResp list(EbookReq req) {
+        List<EbookResp> list=ebookService.list(req);
+        CommonResp<List<EbookResp>> resp = new CommonResp<>();
         resp.setContent(list);
 
         return resp;

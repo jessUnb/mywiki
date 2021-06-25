@@ -74,6 +74,12 @@ public class MysqlGenerator {
         cfg.setFileOutConfigList(focList);
         autoGenerator.setCfg(cfg);
 
+        // 配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+
+        templateConfig.setXml(null);
+        autoGenerator.setTemplate(templateConfig);
+
         // 数据库表策略设置
         StrategyConfig strategyConfig = new StrategyConfig();
         //【实体】是否为lombok模型（默认 false）
@@ -83,7 +89,6 @@ public class MysqlGenerator {
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
 
 //        strategyConfig.setInclude("ebook");
-
         autoGenerator.setStrategy(strategyConfig);
 
 

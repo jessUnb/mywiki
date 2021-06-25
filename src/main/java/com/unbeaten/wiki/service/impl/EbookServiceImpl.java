@@ -1,12 +1,17 @@
 package com.unbeaten.wiki.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.unbeaten.wiki.domain.Ebook;
 import com.unbeaten.wiki.mapper.EbookMapper;
+import com.unbeaten.wiki.req.EbookReq;
+import com.unbeaten.wiki.resp.EbookResp;
 import com.unbeaten.wiki.service.IEbookService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +27,17 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<Ebook> list() {
-        return ebookMapper.selectList(null);
+    public List<EbookResp> list(EbookReq req) {
+        QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", req.getName());
+        List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
+
+        List<EbookResp> respList = new ArrayList<>();
+        for (Ebook ebook : ebookList) {
+            EbookResp ebookResp = new EbookResp();
+            BeanUtils.copyProperties(ebook,ebookResp);
+            respList.add(ebookResp);
+        }
+        return respList;
     }
 }
