@@ -1,9 +1,8 @@
 package com.unbeaten.wiki.domain;
 
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
 
 /**
  * <p>
