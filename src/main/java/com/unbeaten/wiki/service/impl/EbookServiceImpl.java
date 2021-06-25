@@ -7,11 +7,10 @@ import com.unbeaten.wiki.mapper.EbookMapper;
 import com.unbeaten.wiki.req.EbookReq;
 import com.unbeaten.wiki.resp.EbookResp;
 import com.unbeaten.wiki.service.IEbookService;
-import org.springframework.beans.BeanUtils;
+import com.unbeaten.wiki.util.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,12 +31,13 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         queryWrapper.like("name", req.getName());
         List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
 
-        List<EbookResp> respList = new ArrayList<>();
-        for (Ebook ebook : ebookList) {
-            EbookResp ebookResp = new EbookResp();
-            BeanUtils.copyProperties(ebook,ebookResp);
-            respList.add(ebookResp);
-        }
-        return respList;
+//        List<EbookResp> respList = new ArrayList<>();
+//        for (Ebook ebook : ebookList) {
+//            EbookResp ebookResp = new EbookResp();
+//            BeanUtils.copyProperties(ebook,ebookResp);
+//            respList.add(ebookResp);
+//        }
+        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
+        return list;
     }
 }
