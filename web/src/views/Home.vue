@@ -54,12 +54,19 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
-
   },
+  setup(){
+    console.log("setup");
+    axios.get("http://localhost:8880/ebook/list?name=Spring")
+    .then(response=>{
+      console.log(response)
+    })
+  }
 });
 </script>
