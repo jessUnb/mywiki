@@ -2,21 +2,19 @@
   <a-layout>
       <the-header />
       <router-view />
-
-    <a-layout-footer style="text-align: center">
-      Wiki Design ©2021 Created by Unbeaten
-    </a-layout-footer>
+      <the-footer />
   </a-layout>
 </template>
 
 <script lang="ts">
 import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name:'app',
   components: {
     TheHeader,
-
+    TheFooter,
   },
   setup() {
     return {
