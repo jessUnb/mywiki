@@ -98,8 +98,8 @@ export default defineComponent({
     console.log("setup")
     const ebooks = ref()
     onMounted(()=>{
-      console.log("onMounted111")
-      axios.get(process.env.VUE_APP_SERVER+"/ebook/list")
+      console.log("onMounted222")
+      axios.get("/ebook/list")
           .then(response=>{
             ebooks.value=response.data.content
           })
