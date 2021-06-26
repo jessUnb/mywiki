@@ -8,6 +8,7 @@ import com.unbeaten.wiki.req.EbookReq;
 import com.unbeaten.wiki.resp.EbookResp;
 import com.unbeaten.wiki.service.IEbookService;
 import com.unbeaten.wiki.util.CopyUtil;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,7 +29,9 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
 
     public List<EbookResp> list(EbookReq req) {
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name", req.getName());
+        if (!ObjectUtils.isEmpty(req.getName())) {
+            queryWrapper.like("name", req.getName());
+        }
         List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
 
 //        List<EbookResp> respList = new ArrayList<>();
