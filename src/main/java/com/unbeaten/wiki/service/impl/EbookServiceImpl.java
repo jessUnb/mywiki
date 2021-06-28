@@ -2,6 +2,8 @@ package com.unbeaten.wiki.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.unbeaten.wiki.domain.Ebook;
 import com.unbeaten.wiki.mapper.EbookMapper;
 import com.unbeaten.wiki.req.EbookReq;
@@ -9,6 +11,8 @@ import com.unbeaten.wiki.resp.EbookResp;
 import com.unbeaten.wiki.service.IEbookService;
 import com.unbeaten.wiki.util.CopyUtil;
 import org.apache.commons.lang3.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,13 +31,21 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     @Resource
     private EbookMapper ebookMapper;
 
+    private static final Logger LOG = LoggerFactory.getLogger(EbookServiceImpl.class);
+
     public List<EbookResp> list(EbookReq req) {
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
         if (!ObjectUtils.isEmpty(req.getName())) {
             queryWrapper.like("name", req.getName());
         }
+
+        PageHelper.startPage(1, 3);
         List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
 
+
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
+        LOG.info("总行数：{}",pageInfo.getTotal());
+        LOG.info("总页数：{}",pageInfo.getPages());
 //        List<EbookResp> respList = new ArrayList<>();
 //        for (Ebook ebook : ebookList) {
 //            EbookResp ebookResp = new EbookResp();
