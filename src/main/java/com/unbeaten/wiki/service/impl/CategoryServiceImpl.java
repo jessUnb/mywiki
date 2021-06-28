@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.unbeaten.wiki.domain.Category;
-import com.unbeaten.wiki.domain.Category;
-import com.unbeaten.wiki.mapper.CategoryMapper;
 import com.unbeaten.wiki.mapper.CategoryMapper;
 import com.unbeaten.wiki.req.CategoryQueryReq;
 import com.unbeaten.wiki.req.CategorySaveReq;
@@ -42,9 +40,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private static final Logger LOG = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     @Override
+    public List<CategoryQueryResp> all() {
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort");
+        List<Category> categoryList = categoryMapper.selectList(queryWrapper);
+        List<CategoryQueryResp> list = CopyUtil.copyList(categoryList, CategoryQueryResp.class);
+        return list;
+    }
+
+    @Override
     public PageResp<CategoryQueryResp> list(CategoryQueryReq req) {
         QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
-
+        queryWrapper.orderByAsc("sort");
         PageHelper.startPage(req.getPage(), req.getSize());
         List<Category> categoryList = categoryMapper.selectList(queryWrapper);
 

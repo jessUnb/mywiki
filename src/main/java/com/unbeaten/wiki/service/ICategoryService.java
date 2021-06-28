@@ -7,6 +7,8 @@ import com.unbeaten.wiki.req.CategorySaveReq;
 import com.unbeaten.wiki.resp.CategoryQueryResp;
 import com.unbeaten.wiki.resp.PageResp;
 
+import java.util.List;
+
 /**
  * <p>
  * 分类 服务类
@@ -16,6 +18,7 @@ import com.unbeaten.wiki.resp.PageResp;
  * @since 2021-06-28
  */
 public interface ICategoryService extends IService<Category> {
+    List<CategoryQueryResp> all();
     PageResp<CategoryQueryResp> list(CategoryQueryReq req);
     //保存
     void save(CategorySaveReq req);

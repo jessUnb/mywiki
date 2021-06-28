@@ -3,14 +3,15 @@ package com.unbeaten.wiki.controller;
 
 import com.unbeaten.wiki.req.CategoryQueryReq;
 import com.unbeaten.wiki.req.CategorySaveReq;
-import com.unbeaten.wiki.resp.CommonResp;
 import com.unbeaten.wiki.resp.CategoryQueryResp;
+import com.unbeaten.wiki.resp.CommonResp;
 import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.service.impl.CategoryServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -30,6 +31,14 @@ public class CategoryController {
     public CommonResp list(@Valid CategoryQueryReq req) {
         CommonResp<PageResp<CategoryQueryResp>> resp = new CommonResp<>();
         PageResp<CategoryQueryResp> list=categoryService.list(req);
+        resp.setContent(list);
+
+        return resp;
+    }
+    @GetMapping("/all")
+    public CommonResp all() {
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();
+        List<CategoryQueryResp> list=categoryService.all();
         resp.setContent(list);
 
         return resp;
