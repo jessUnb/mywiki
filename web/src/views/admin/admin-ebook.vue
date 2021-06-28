@@ -12,8 +12,11 @@
           @change="handleTableChange"
       >
         <template #cover="{ text: cover }">
-          <img v-if="cover" :src="cover" alt="avatar" />
+          <div class="myimg">
+            <img  v-if="cover" :src="cover" alt="avatar"  />
+          </div>
         </template>
+
         <template v-slot:action="{ text, record }">
           <a-space size="small">
             <a-button type="primary" @click="edit(record)">
@@ -131,4 +134,19 @@ export default defineComponent({
     }
   }
 });
+
 </script>
+
+<style scoped>
+.myimg {
+  width: 15%;
+  height: 15%;
+}
+img {
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+
+
