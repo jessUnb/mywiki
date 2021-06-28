@@ -12,6 +12,7 @@ import com.unbeaten.wiki.resp.EbookQueryResp;
 import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.service.IEbookService;
 import com.unbeaten.wiki.util.CopyUtil;
+import com.unbeaten.wiki.util.SnowFlake;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,9 @@ import java.util.List;
 public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements IEbookService {
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    private SnowFlake snowFlake;
 
     private static final Logger LOG = LoggerFactory.getLogger(EbookServiceImpl.class);
 
@@ -68,6 +72,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         Ebook ebook=CopyUtil.copy(req,Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())) {
             //新增
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         } else {
             //更新
