@@ -39,6 +39,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
 
     private static final Logger LOG = LoggerFactory.getLogger(EbookServiceImpl.class);
 
+    @Override
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
         if (!ObjectUtils.isEmpty(req.getName())) {
@@ -79,4 +80,10 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
             ebookMapper.updateById(ebook);
         }
     }
+
+    @Override
+    public void delete(Long id) {
+        ebookMapper.deleteById(id);
+    }
+
 }
