@@ -15,18 +15,18 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class EbookReq extends PageReq implements Serializable {
+public class PageReq implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * id
+     * page
      */
-      private Long id;
+    private int page;
 
-    /**
-     * 名称
+    /**\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\774\\\\\\\\\\
+     * size
      */
-    private String name;
+    private int size;
 
 }

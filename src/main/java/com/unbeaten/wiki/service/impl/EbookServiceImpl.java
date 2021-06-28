@@ -8,6 +8,7 @@ import com.unbeaten.wiki.domain.Ebook;
 import com.unbeaten.wiki.mapper.EbookMapper;
 import com.unbeaten.wiki.req.EbookReq;
 import com.unbeaten.wiki.resp.EbookResp;
+import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.service.IEbookService;
 import com.unbeaten.wiki.util.CopyUtil;
 import org.apache.commons.lang3.ObjectUtils;
@@ -33,13 +34,13 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
 
     private static final Logger LOG = LoggerFactory.getLogger(EbookServiceImpl.class);
 
-    public List<EbookResp> list(EbookReq req) {
+    public PageResp<EbookResp> list(EbookReq req) {
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
         if (!ObjectUtils.isEmpty(req.getName())) {
             queryWrapper.like("name", req.getName());
         }
 
-        PageHelper.startPage(1, 3);
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
 
 
@@ -52,7 +53,12 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
 //            BeanUtils.copyProperties(ebook,ebookResp);
 //            respList.add(ebookResp);
 //        }
+
         List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
-        return list;
+        PageResp<EbookResp> pageResp = new PageResp<>();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(list);
+
+        return pageResp;
     }
 }
