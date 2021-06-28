@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class EbookReq extends PageReq implements Serializable {
+public class EbookQueryReq extends PageReq implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

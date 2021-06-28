@@ -1,4 +1,4 @@
-package com.unbeaten.wiki.resp;
+package com.unbeaten.wiki.req;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class EbookResp implements Serializable {
+public class EbookSaveReq implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
