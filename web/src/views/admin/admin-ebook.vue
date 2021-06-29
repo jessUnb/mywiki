@@ -34,6 +34,9 @@
             <img v-if="cover" :src="cover" alt="avatar"/>
           </div>
         </template>
+        <template v-slot:category="{text,record}">
+          <span>{{ getCategoryName(record.category1Id) }}/{{ getCategoryName(record.category2Id) }}</span>
+        </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
             <a-button type="primary" @click="edit(record)">
@@ -71,7 +74,7 @@
       </a-form-item>
       <a-form-item label="分类">
         <a-cascader v-model:value="categoryIds"
-                    :field-names="{label:'name',value:'id',children:'children'}" :options="level1"  />
+                    :field-names="{label:'name',value:'id',children:'children'}" :options="level1"/>
       </a-form-item>
       <a-form-item label="描述">
         <a-input v-model:value="ebook.description" type="textarea"/>
@@ -110,12 +113,8 @@ export default defineComponent({
         dataIndex: 'name'
       },
       {
-        title: '分类一',
-        dataIndex: 'category1Id'
-      },
-      {
-        title: '分类二',
-        dataIndex: 'category2Id'
+        title: '分类',
+        slots: {customRender: 'category'}
       },
       {
         title: '文档数',
@@ -175,14 +174,14 @@ export default defineComponent({
     };
 
     // -------- 表单 ---------
-    const categoryIds=ref();
+    const categoryIds = ref();
     const ebook = ref();
     const modalVisible = ref(false);
     const modalLoading = ref(false);
     const handleModalOk = () => {
       modalLoading.value = true;
-      ebook.value.category1Id=categoryIds.value[0];
-      ebook.value.category2Id=categoryIds.value[1];
+      ebook.value.category1Id = categoryIds.value[0];
+      ebook.value.category2Id = categoryIds.value[1];
       axios.post("/ebook/save", ebook.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
@@ -205,7 +204,7 @@ export default defineComponent({
     const edit = (record: any) => {
       modalVisible.value = true;
       ebook.value = Tool.copy(record)
-      categoryIds.value=[ebook.value.category1Id,ebook.value.category2Id]
+      categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
     };
 
     /**
@@ -231,7 +230,8 @@ export default defineComponent({
         }
       });
     };
-    const level1 =  ref();
+    const level1 = ref();
+    let categorys: any
     /**
      * 查询所有分类
      **/
@@ -240,20 +240,27 @@ export default defineComponent({
       axios.get("/category/all").then((response) => {
         loading.value = false;
         const data = response.data;
-
         if (data.success) {
-          const categorys = data.content;
+          categorys = data.content;
           console.log("原始数组：", categorys);
 
           level1.value = [];
           level1.value = Tool.array2Tree(categorys, 0);
           console.log("树形结构：", level1);
-
         } else {
           message.error(data.message);
         }
       });
     };
+    const getCategoryName = (cid: number) => {
+      let result = ""
+      categorys.forEach((item: any) => {
+            if (item.id === cid) {
+              result = item.name
+            }
+          })
+      return result
+    }
     onMounted(() => {
       handleQueryCategory()
       handleQuery({
@@ -270,6 +277,7 @@ export default defineComponent({
       param,
       handleTableChange,
       handleQuery,
+      getCategoryName,
 
       add,
       edit,
@@ -280,7 +288,7 @@ export default defineComponent({
       modalLoading,
       handleModalOk,
       categoryIds,
-      level1
+      level1,
     }
   }
 });
