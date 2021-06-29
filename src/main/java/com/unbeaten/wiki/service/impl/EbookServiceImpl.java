@@ -45,6 +45,9 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         if (!ObjectUtils.isEmpty(req.getName())) {
             queryWrapper.like("name", req.getName());
         }
+        if (!ObjectUtils.isEmpty(req.getCategoryId2())) {
+            queryWrapper.eq("category2_id", req.getCategoryId2());
+        }
 
         PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);

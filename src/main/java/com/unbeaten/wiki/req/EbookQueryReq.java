@@ -25,6 +25,11 @@ public class EbookQueryReq extends PageReq implements Serializable {
       private Long id;
 
     /**
+     * cid2
+     */
+      private Long categoryId2;
+
+    /**
      * 名称
      */
     private String name;
