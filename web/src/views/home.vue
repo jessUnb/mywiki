@@ -4,12 +4,11 @@
       <a-menu
           mode="inline"
           :style="{ height: '100%', borderRight: 0 }"
+          @click="handleClick"
       >
         <a-menu-item key="welcome">
-          <router-link :to="'/'">
             <MailOutlined />
             <span>欢迎</span>
-          </router-link>
         </a-menu-item>
         <a-sub-menu v-for="item in level1" :key="item.id">
           <template v-slot:title>
@@ -24,7 +23,10 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+      <div class="welcome" v-show="isShowWelcome">
+        <h1>欢迎使用my-wiki</h1>
+      </div>
+      <a-list v-show="!isShowWelcome" item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
         <template #renderItem="{ item }">
           <a-list-item key="item.name">
             <template #actions>
@@ -54,23 +56,10 @@ import {Tool} from "@/util/tool";
 
 const listData: any = [];
 
-// for (let i = 0; i < 23; i++) {
-//     listData.push({
-//         href: 'https://www.antdv.com/',
-//         title: `ant design vue part ${i}`,
-//         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-//         description:
-//             'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-//         content:
-//             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-//     });
-// }
-
 export default defineComponent({
   name: 'Home',
   setup() {
     const ebooks = ref();
-    // const ebooks1 = reactive({books: []});
 
     const level1 =  ref();
     let categorys: any;
@@ -93,9 +82,16 @@ export default defineComponent({
       });
     };
 
-    const handleClick = () => {
-      console.log("menu click")
+    const handleClick = (value:any) => {
+      // if (value.key === 'welcome') {
+      //   isShowWelcome.value = true;
+      // } else {
+      //   isShowWelcome.value = false;
+      // }
+      isShowWelcome.value=value.key==='welcome'
     };
+
+    const isShowWelcome=ref(true)
 
     onMounted(() => {
       handleQueryCategory();
@@ -105,16 +101,14 @@ export default defineComponent({
           size: 1000
         }
       }).then((response) => {
-        const  data = response.data;
+        const data = response.data;
         ebooks.value = data.content.list;
-        // ebooks1.books = data.content;
       });
     });
 
     return {
+      isShowWelcome,
       ebooks,
-      // ebooks2: toRef(ebooks1,"books"),
-      // listData,
       pagination: {
         onChange: (page: any) => {
           console.log(page);
