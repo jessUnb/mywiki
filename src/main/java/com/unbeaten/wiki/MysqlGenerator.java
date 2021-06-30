@@ -88,7 +88,7 @@ public class MysqlGenerator {
         strategyConfig.setRestControllerStyle(true);
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
 
-//        strategyConfig.setInclude("doc");
+//        strategyConfig.setI nclude("content");
         autoGenerator.setStrategy(strategyConfig);
 
 
