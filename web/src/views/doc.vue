@@ -24,13 +24,15 @@ import {defineComponent, onMounted, ref} from "vue";
 import {message} from "ant-design-vue";
 import axios from "axios";
 import {Tool} from "@/util/tool";
+import {useRoute} from "vue-router";
 export default defineComponent({
   name: 'doc',
   setup(){
     const level1 = ref();
     level1.value = [];
+    const route=new useRoute()
     const handleQuery = () => {
-      axios.get("/doc/all").then((response) => {
+      axios.get("/doc/all/"+route.query.ebookId).then((response) => {
         const data = response.data;
         if(data.success){
           level1.value = Tool.array2Tree(data.content,0);

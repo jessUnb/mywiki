@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2021-06-29
  */
 public interface IDocService extends IService<Doc> {
-    List<DocQueryResp> all();
+    List<DocQueryResp> all(Long ebookId);
     PageResp<DocQueryResp> list(DocQueryReq req);
     //保存
     void save(DocSaveReq req);

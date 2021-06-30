@@ -46,9 +46,11 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
     private static final Logger LOG = LoggerFactory.getLogger(DocServiceImpl.class);
 
     @Override
-    public List<DocQueryResp> all() {
+    public List<DocQueryResp> all(Long ebookId) {
         QueryWrapper<Doc> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("ebook_id", ebookId);
         queryWrapper.orderByAsc("sort");
+
         List<Doc> docList = docMapper.selectList(queryWrapper);
         List<DocQueryResp> list = CopyUtil.copyList(docList, DocQueryResp.class);
         return list;
@@ -65,12 +67,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         PageInfo<Doc> pageInfo = new PageInfo<>(docList);
         LOG.info("总行数：{}",pageInfo.getTotal());
         LOG.info("总页数：{}",pageInfo.getPages());
-//        List<DocQueryResp> respList = new ArrayList<>();
-//        for (Doc doc : docList) {
-//            DocQueryResp docResp = new DocQueryResp();
-//            BeanUtils.copyProperties(doc,docResp);
-//            respList.add(docResp);
-//        }
+
 
         List<DocQueryResp> list = CopyUtil.copyList(docList, DocQueryResp.class);
         PageResp<DocQueryResp> pageResp = new PageResp<>();
