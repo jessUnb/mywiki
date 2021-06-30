@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.unbeaten.wiki.domain.Content;
 import com.unbeaten.wiki.domain.Doc;
+import com.unbeaten.wiki.mapper.ContentMapper;
 import com.unbeaten.wiki.mapper.DocMapper;
 import com.unbeaten.wiki.req.DocQueryReq;
 import com.unbeaten.wiki.req.DocSaveReq;
@@ -34,6 +36,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
     @Resource
     private DocMapper docMapper;
+
+    @Resource
+    private ContentMapper contentMapper;
 
     @Resource
     private SnowFlake snowFlake;
@@ -78,13 +83,21 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
     @Override
     public void save(DocSaveReq req) {
         Doc doc= CopyUtil.copy(req,Doc.class);
+        Content content= CopyUtil.copy(req,Content.class);
         if (ObjectUtils.isEmpty(req.getId())) {
             //新增
             doc.setId(snowFlake.nextId());
             docMapper.insert(doc);
+
+            content.setId(doc.getId());
+            contentMapper.insert(content);
         } else {
             //更新
             docMapper.updateById(doc);
+            int count=contentMapper.updateById(content);
+            if (count == 0) {
+                contentMapper.insert(content);
+            }
         }
     }
 
