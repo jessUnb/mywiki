@@ -194,8 +194,7 @@ export default defineComponent({
         modalLoading.value = false;
         const data = response.data; // data = commonResp
         if (data.success) {
-          modalVisible.value = false;
-
+          message.success("保存成功！")
           // 重新加载列表
           handleQuery();
         } else {
@@ -288,6 +287,7 @@ export default defineComponent({
      * 编辑
      */
     const edit = (record: any) => {
+      editor.txt.html("")
       modalVisible.value = true;
       doc.value = Tool.copy(record);
       handleQueryContent()
@@ -334,7 +334,6 @@ export default defineComponent({
           axios.delete("/doc/delete/" + deleteIds.join(",")).then((response) => {
             const data = response.data; // data = commonResp
             if (data.success) {
-              // 重新加载列表
               handleQuery();
             } else {
               message.error(data.message);
