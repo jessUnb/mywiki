@@ -26,6 +26,7 @@ import {message} from "ant-design-vue";
 import axios from "axios";
 import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
+
 export default defineComponent({
   name: 'doc',
   setup: function () {
@@ -48,18 +49,18 @@ export default defineComponent({
     /**
      * 内容查询
      **/
-    const handleQueryContent = (id:number) => {
+    const handleQueryContent = (id: number) => {
       axios.get("/doc/find-content/" + id).then((response) => {
         const data = response.data;
         if (data.success) {
-          html.value=data.content
+          html.value = data.content
         } else {
           message.error(data.message);
         }
       });
     };
 
-    const onSelect=(selectedKeys:any,info:any)=>{
+    const onSelect = (selectedKeys: any, info: any) => {
       if (Tool.isNotEmpty(selectedKeys)) {
         handleQueryContent(selectedKeys[0])
       }
@@ -85,12 +86,14 @@ export default defineComponent({
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
 }
+
 .wangeditor table td,
 .wangeditor table th {
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   padding: 3px 5px;
 }
+
 .wangeditor table th {
   border-bottom: 2px solid #ccc;
   text-align: center;
@@ -117,6 +120,7 @@ export default defineComponent({
   padding: 3px 5px;
   margin: 0 3px;
 }
+
 .wangeditor pre code {
   display: block;
 }
@@ -125,4 +129,14 @@ export default defineComponent({
 .wangeditor ul, ol {
   margin: 10px 0 10px 20px;
 }
+
+/* 和 antdv p 冲突 覆盖掉*/
+.wangeditor blockquote p {
+  font-family: "YouYuan";
+  margin: 20px 10px !important;
+  font-size: 16px !important;
+  font-weight: 600;
+}
+
 </style>
+
