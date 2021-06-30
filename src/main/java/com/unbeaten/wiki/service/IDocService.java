@@ -24,4 +24,6 @@ public interface IDocService extends IService<Doc> {
     void save(DocSaveReq req);
 
     void delete(Long id);
+
+    String findContent(Long id);
 }

@@ -106,6 +106,12 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         docMapper.deleteById(id);
     }
 
+    @Override
+    public String findContent(Long id) {
+        Content content = contentMapper.selectById(id);
+        return content.getContent();
+    }
+
     public void delete(List<String> ids) {
         docMapper.deleteBatchIds(ids);
     }
