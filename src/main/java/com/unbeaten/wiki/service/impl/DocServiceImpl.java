@@ -65,8 +65,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
 
         PageInfo<Doc> pageInfo = new PageInfo<>(docList);
-        LOG.info("总行数：{}",pageInfo.getTotal());
-        LOG.info("总页数：{}",pageInfo.getPages());
+        LOG.info("总行数：{}", pageInfo.getTotal());
+        LOG.info("总页数：{}", pageInfo.getPages());
 
 
         List<DocQueryResp> list = CopyUtil.copyList(docList, DocQueryResp.class);
@@ -79,8 +79,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
     @Override
     public void save(DocSaveReq req) {
-        Doc doc= CopyUtil.copy(req,Doc.class);
-        Content content= CopyUtil.copy(req,Content.class);
+        Doc doc = CopyUtil.copy(req, Doc.class);
+        Content content = CopyUtil.copy(req, Content.class);
         if (ObjectUtils.isEmpty(req.getId())) {
             //新增
             doc.setId(snowFlake.nextId());
@@ -91,7 +91,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         } else {
             //更新
             docMapper.updateById(doc);
-            int count=contentMapper.updateById(content);
+            int count = contentMapper.updateById(content);
             if (count == 0) {
                 contentMapper.insert(content);
             }
@@ -106,11 +106,15 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
     @Override
     public String findContent(Long id) {
         Content content = contentMapper.selectById(id);
-        return content.getContent();
+        if (ObjectUtils.isEmpty(content)) {
+            return "";
+        } else {
+            return content.getContent();
+        }
     }
 
     public void delete(List<String> ids) {
         docMapper.deleteBatchIds(ids);
     }
-    
+
 }
