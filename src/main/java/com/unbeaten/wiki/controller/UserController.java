@@ -1,11 +1,13 @@
 package com.unbeaten.wiki.controller;
 
 
+import com.unbeaten.wiki.req.UserLoginReq;
 import com.unbeaten.wiki.req.UserQueryReq;
 import com.unbeaten.wiki.req.UserResetPasswordReq;
 import com.unbeaten.wiki.req.UserSaveReq;
 import com.unbeaten.wiki.resp.CommonResp;
 import com.unbeaten.wiki.resp.PageResp;
+import com.unbeaten.wiki.resp.UserLoginResp;
 import com.unbeaten.wiki.resp.UserQueryResp;
 import com.unbeaten.wiki.service.impl.UserServiceImpl;
 import org.springframework.util.DigestUtils;
@@ -57,6 +59,15 @@ public class UserController {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp resp = new CommonResp<>();
         userService.resetPassword(req);
+        return resp;
+    }
+
+    @PostMapping("/login")
+    public CommonResp<UserLoginResp>login(@Valid @RequestBody UserLoginReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp<UserLoginResp> resp = new CommonResp<>();
+        UserLoginResp userLoginResp=userService.login(req);
+        resp.setContent(userLoginResp);
         return resp;
     }
 

@@ -8,10 +8,12 @@ import com.unbeaten.wiki.domain.User;
 import com.unbeaten.wiki.exception.BusinessException;
 import com.unbeaten.wiki.exception.BusinessExceptionCode;
 import com.unbeaten.wiki.mapper.UserMapper;
+import com.unbeaten.wiki.req.UserLoginReq;
 import com.unbeaten.wiki.req.UserQueryReq;
 import com.unbeaten.wiki.req.UserResetPasswordReq;
 import com.unbeaten.wiki.req.UserSaveReq;
 import com.unbeaten.wiki.resp.PageResp;
+import com.unbeaten.wiki.resp.UserLoginResp;
 import com.unbeaten.wiki.resp.UserQueryResp;
 import com.unbeaten.wiki.service.IUserService;
 import com.unbeaten.wiki.util.CopyUtil;
@@ -108,6 +110,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void resetPassword(UserResetPasswordReq req) {
         User user = CopyUtil.copy(req, User.class);
         userMapper.updateById(user);
+    }
+
+    @Override
+    public UserLoginResp login(UserLoginReq req) {
+        User userDb = selectByLoginName(req.getLoginName());
+        if (ObjectUtils.isEmpty(userDb)) {
+            //用户名不存在
+            LOG.info("用户名不存在，{}",req.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        } else {
+            if (userDb.getPassword().equals(req.getPassword())) {
+                //登录成功
+                return CopyUtil.copy(userDb, UserLoginResp.class);
+            } else {
+                //密码不对
+                LOG.info("密码不对，输入密码：{},数据库密码:{}",req.getPassword(),userDb.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            }
+        }
     }
 
 
