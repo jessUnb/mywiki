@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.unbeaten.wiki.domain.User;
+import com.unbeaten.wiki.exception.BusinessException;
+import com.unbeaten.wiki.exception.BusinessExceptionCode;
 import com.unbeaten.wiki.mapper.UserMapper;
 import com.unbeaten.wiki.req.UserQueryReq;
 import com.unbeaten.wiki.req.UserSaveReq;
@@ -17,6 +19,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -66,9 +69,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void save(UserSaveReq req) {
         User user=CopyUtil.copy(req,User.class);
         if (ObjectUtils.isEmpty(req.getId())) {
-            //新增
-            user.setId(snowFlake.nextId());
-            userMapper.insert(user);
+            if (ObjectUtils.isEmpty(selectByLoginName(req.getLoginName()))) {
+                //新增
+                user.setId(snowFlake.nextId());
+                userMapper.insert(user);
+            } else {
+                //用户名已存在
+                throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
+            }
         } else {
             //更新
             userMapper.updateById(user);
@@ -79,4 +87,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void delete(Long id) {
         userMapper.deleteById(id);
     }
+
+    @Override
+    public User selectByLoginName(String loginName) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("login_name", loginName);
+
+        List<User> userList = userMapper.selectList(queryWrapper);
+
+        if (CollectionUtils.isEmpty(userList)) {
+            return null;
+        }
+        return userList.get(0);
+    }
+
+
 }

@@ -164,8 +164,6 @@ export default defineComponent({
     const modalLoading = ref(false);
     const handleModalOk = () => {
       modalLoading.value = true;
-      user.value.category1Id = categoryIds.value[0];
-      user.value.category2Id = categoryIds.value[1];
       axios.post("/user/save", user.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;

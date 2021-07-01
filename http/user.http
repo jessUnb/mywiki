@@ -1,0 +1,10 @@
+POST http://localhost:8880/user/save
+Content-Type: application/json
+
+{
+  "loginName": "222",
+  "name": "woca",
+  "password": "eqweq12"
+}
+
+###

@@ -1,7 +1,6 @@
 package com.unbeaten.wiki.req;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,10 +15,8 @@ import java.io.Serializable;
  * @since 2021-07-01
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class UserSaveReq implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+public class UserSaveReq implements Serializable {
 
     /**
      * ID
