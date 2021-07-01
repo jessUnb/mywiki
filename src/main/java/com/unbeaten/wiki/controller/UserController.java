@@ -2,6 +2,7 @@ package com.unbeaten.wiki.controller;
 
 
 import com.unbeaten.wiki.req.UserQueryReq;
+import com.unbeaten.wiki.req.UserResetPasswordReq;
 import com.unbeaten.wiki.req.UserSaveReq;
 import com.unbeaten.wiki.resp.CommonResp;
 import com.unbeaten.wiki.resp.PageResp;
@@ -48,6 +49,14 @@ public class UserController {
     public CommonResp delete(@PathVariable Long id) {
         CommonResp resp = new CommonResp<>();
         userService.delete(id);
+        return resp;
+    }
+
+    @PostMapping("/reset-password")
+    public CommonResp resetPassword(@Valid @RequestBody UserResetPasswordReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp resp = new CommonResp<>();
+        userService.resetPassword(req);
         return resp;
     }
 

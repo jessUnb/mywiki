@@ -9,6 +9,7 @@ import com.unbeaten.wiki.exception.BusinessException;
 import com.unbeaten.wiki.exception.BusinessExceptionCode;
 import com.unbeaten.wiki.mapper.UserMapper;
 import com.unbeaten.wiki.req.UserQueryReq;
+import com.unbeaten.wiki.req.UserResetPasswordReq;
 import com.unbeaten.wiki.req.UserSaveReq;
 import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.resp.UserQueryResp;
@@ -101,6 +102,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return null;
         }
         return userList.get(0);
+    }
+
+    @Override
+    public void resetPassword(UserResetPasswordReq req) {
+        User user = CopyUtil.copy(req, User.class);
+        userMapper.updateById(user);
     }
 
 
