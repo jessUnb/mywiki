@@ -7,6 +7,7 @@ import com.unbeaten.wiki.resp.CommonResp;
 import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.resp.UserQueryResp;
 import com.unbeaten.wiki.service.impl.UserServiceImpl;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,6 +39,7 @@ public class UserController {
 
     @PostMapping("/save")
     public CommonResp save(@Valid @RequestBody UserSaveReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp resp = new CommonResp<>();
         userService.save(req);
         return resp;
