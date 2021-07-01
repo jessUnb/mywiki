@@ -79,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         } else {
             //更新
+            user.setLoginName(null);
             userMapper.updateById(user);
         }
     }
