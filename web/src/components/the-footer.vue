@@ -1,6 +1,6 @@
 <template>
   <a-layout-footer style="text-align: center">
-    MyWiki ，欢迎 {{user.name}}
+    MyWiki <span v-show="user.id">，欢迎 {{user.name}}</span>
   </a-layout-footer>
 </template>
 
