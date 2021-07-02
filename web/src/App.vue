@@ -1,28 +1,31 @@
 <template>
-  <a-layout>
-      <the-header />
-      <router-view />
-      <the-footer />
+  <a-layout id="components-layout-demo-top-side-2">
+    <the-header></the-header>
+    <router-view />
+    <the-footer></the-footer>
   </a-layout>
 </template>
 
 <script lang="ts">
-import TheHeader from '@/components/the-header.vue';
-import TheFooter from '@/components/the-footer.vue';
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  name:'app',
-  components: {
-    TheHeader,
-    TheFooter,
-  },
-  setup() {
-    return {
-      selectedKeys1: ref<string[]>(['2']),
-      selectedKeys2: ref<string[]>(['1']),
-      collapsed: ref<boolean>(false),
-      openKeys: ref<string[]>(['sub1']),
-    };
-  },
-});
+    import { defineComponent } from 'vue';
+    import TheHeader from '@/components/the-header.vue';
+    import TheFooter from '@/components/the-footer.vue';
+
+    export default defineComponent({
+        name: 'app',
+        components: {
+            TheHeader,
+            TheFooter
+        },
+    });
 </script>
+
+<style>
+  #components-layout-demo-top-side-2 .logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 28px 16px 30px;
+    float: left;
+  }
+</style>

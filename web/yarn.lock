@@ -948,10 +948,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.2.0-beta.5:
-  version "2.2.0-beta.5"
-  resolved "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.0-beta.5.tgz?cache=0&sync_timestamp=1624516450324&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fant-design-vue%2Fdownload%2Fant-design-vue-2.2.0-beta.5.tgz#ecdabe06c0d168321c30525b822d322bdc9b443a"
-  integrity sha1-7Nq+BsDRaDIcMFJbgi0yK9ybRDo=
+ant-design-vue@^2.0.0-rc.3:
+  version "2.1.6"
+  resolved "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.1.6.tgz?cache=0&sync_timestamp=1624956690599&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fant-design-vue%2Fdownload%2Fant-design-vue-2.1.6.tgz#c51cdc858e1b1b8b569f5435eb487f53a3f1745e"
+  integrity sha1-xRzchY4bG4tWn1Q160h/U6PxdF4=
   dependencies:
     "@ant-design-vue/use" "^0.0.1-0"
     "@ant-design/icons-vue" "^6.0.0"
@@ -959,12 +959,13 @@ ant-design-vue@^2.2.0-beta.5:
     "@simonwep/pickr" "~1.8.0"
     array-tree-filter "^2.1.0"
     async-validator "^3.3.0"
-    dom-align "^1.12.1"
+    dom-align "^1.10.4"
     dom-scroll-into-view "^2.0.0"
     lodash "^4.17.21"
     lodash-es "^4.17.15"
     moment "^2.27.0"
     omit.js "^2.0.0"
+    resize-observer-polyfill "^1.5.1"
     scroll-into-view-if-needed "^2.2.25"
     shallow-equal "^1.0.0"
     vue-types "^3.0.0"
@@ -2484,7 +2485,7 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dom-align@^1.12.1:
+dom-align@^1.10.4:
   version "1.12.2"
   resolved "https://registry.nlark.com/dom-align/download/dom-align-1.12.2.tgz#0f8164ebd0c9c21b0c790310493cd855892acd4b"
   integrity sha1-D4Fk69DJwhsMeQMQSTzYVYkqzUs=
