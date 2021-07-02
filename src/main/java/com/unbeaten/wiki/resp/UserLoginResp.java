@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 
-public class UserLoginResp implements Serializable {
+public class UserLoginResp {
 
     /**
      * ID
@@ -30,6 +30,11 @@ public class UserLoginResp implements Serializable {
      * 昵称
      */
     private String name;
+
+    /**
+     * token
+     */
+    private String token;
 
 
 

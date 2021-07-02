@@ -10,11 +10,16 @@ import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.resp.UserLoginResp;
 import com.unbeaten.wiki.resp.UserQueryResp;
 import com.unbeaten.wiki.service.impl.UserServiceImpl;
+import com.unbeaten.wiki.util.SnowFlake;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -27,9 +32,15 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserServiceImpl userService;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    @Resource
+    private SnowFlake snowFlake;
 
     @GetMapping("/list")
     public CommonResp list(@Valid UserQueryReq req) {
@@ -67,6 +78,13 @@ public class UserController {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp<UserLoginResp> resp = new CommonResp<>();
         UserLoginResp userLoginResp=userService.login(req);
+
+        //生成单点登录 token，并放入 redis 中
+        String token = snowFlake.nextId()+"";
+        LOG.info("生成单点登录 token:{}，并放入 redis 中",token);
+
+        userLoginResp.setToken(token);
+        redisTemplate.opsForValue().set(token, userLoginResp,3600*24, TimeUnit.SECONDS);
         resp.setContent(userLoginResp);
         return resp;
     }
