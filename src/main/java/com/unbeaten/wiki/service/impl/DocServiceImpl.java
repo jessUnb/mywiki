@@ -25,6 +25,7 @@ import com.unbeaten.wiki.websocket.WebSocketServer;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -148,7 +149,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
         //推送消息
         Doc docDb = docMapper.selectById(id);
-        wsService.sendInfo("【"+docDb.getName()+"】被点赞!");
+        String logId = MDC.get("LOG_ID");
+        wsService.sendInfo("【"+docDb.getName()+"】被点赞!",logId);
     }
 
 
