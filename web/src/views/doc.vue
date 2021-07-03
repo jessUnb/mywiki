@@ -15,6 +15,14 @@
           </a-tree>
         </a-col>
         <a-col :span="18">
+          <div>
+            <h2>{{doc.name}}</h2>
+            <div>
+              <span>阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;
+              <span>点赞数：{{doc.voewCount}}</span>
+            </div>
+            <a-divider style="height: 2px;background-color: #9999cc" />
+          </div>
           <div class="wangeditor" :innerHTML="html"></div>
         </a-col>
       </a-row>
@@ -37,7 +45,8 @@ export default defineComponent({
     const docs=ref()
     const defaultSelectedKeys=ref()
     defaultSelectedKeys.value=[]
-
+    const doc=ref()
+    doc.value={}
 
     /**
      * 内容查询
@@ -56,6 +65,7 @@ export default defineComponent({
 
     const level1 = ref();
     level1.value=[]
+
     const handleQuery = () => {
       axios.get("/doc/all/" + route.query.ebookId).then((response) => {
         const data = response.data;
@@ -68,6 +78,8 @@ export default defineComponent({
           if (Tool.isNotEmpty(level1)) {
             defaultSelectedKeys.value=[level1.value[0].id]
             handleQueryContent(level1.value[0].id)
+            //初始显示文档信息
+            doc.value=level1.value[0]
           }
         } else {
           message.error(data.message);
@@ -78,6 +90,9 @@ export default defineComponent({
 
     const onSelect = (selectedKeys: any, info: any) => {
       if (Tool.isNotEmpty(selectedKeys)) {
+        //选中某一节点时，加载该节点的文档信息
+        doc.value=info.selectedNodes[0].props
+        //加载内容
         handleQueryContent(selectedKeys[0])
       }
     }
@@ -88,9 +103,9 @@ export default defineComponent({
     return {
       level1,
       html,
+      onSelect,
       defaultSelectedKeys,
-
-      onSelect
+      doc,
     }
   }
 })
