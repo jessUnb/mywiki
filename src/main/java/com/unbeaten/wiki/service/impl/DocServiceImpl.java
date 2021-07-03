@@ -140,6 +140,10 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         }
     }
 
+    public void updateEbookInfo(){
+        docMapperCust.updateEbookInfo();
+    }
+
     public void delete(List<String> ids) {
         docMapper.deleteBatchIds(ids);
     }
