@@ -17,5 +17,7 @@ module.exports = {
     'vue/no-unused-components': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'vue/no-unused-vars': 0,
+    '@typescript-eslint/type-annotation-spacing': 0,
+    '@typescript-eslint/no-unused-vars': 0,
   }
 }

@@ -60,7 +60,7 @@ export default defineComponent({
   name: 'Home',
   setup() {
     const ebooks = ref();
-
+    let categoryId2=0
     const level1 =  ref();
     let categorys: any;
     /**
@@ -94,7 +94,6 @@ export default defineComponent({
       });
     }
     const isShowWelcome=ref(true)
-    let categoryId2=0
 
     const handleClick = (value:any) => {
       if (value.key === 'welcome') {

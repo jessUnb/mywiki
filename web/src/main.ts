@@ -39,7 +39,7 @@ app.use(Antd)
 
 app.mount('#app')
 
-const icons:any=Icons
+const icons: any=Icons
 for (const i in icons) {
     app.component(i,icons[i])
 }
