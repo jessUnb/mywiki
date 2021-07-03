@@ -16,6 +16,7 @@ import com.unbeaten.wiki.req.DocSaveReq;
 import com.unbeaten.wiki.resp.DocQueryResp;
 import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.service.IDocService;
+import com.unbeaten.wiki.service.WsService;
 import com.unbeaten.wiki.util.CopyUtil;
 import com.unbeaten.wiki.util.RedisUtil;
 import com.unbeaten.wiki.util.RequestContext;
@@ -24,6 +25,7 @@ import com.unbeaten.wiki.websocket.WebSocketServer;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -56,7 +58,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
     private RedisUtil redisUtil;
 
     @Resource
-    private WebSocketServer webSocketServe;
+    private WsService wsService;
+
 
     private static final Logger LOG = LoggerFactory.getLogger(DocServiceImpl.class);
 
@@ -145,8 +148,10 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
         //推送消息
         Doc docDb = docMapper.selectById(id);
-        webSocketServe.sendInfo("【"+docDb.getName()+"】被点赞!");
+        wsService.sendInfo("【"+docDb.getName()+"】被点赞!");
     }
+
+
 
     public void updateEbookInfo(){
         docMapperCust.updateEbookInfo();

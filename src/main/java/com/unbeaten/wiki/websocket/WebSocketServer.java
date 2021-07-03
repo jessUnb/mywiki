@@ -2,6 +2,7 @@ package com.unbeaten.wiki.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -59,6 +60,7 @@ public class WebSocketServer {
     /**
      * 群发消息
      */
+
     public void sendInfo(String message) {
         for (String token : map.keySet()) {
             Session session = map.get(token);
