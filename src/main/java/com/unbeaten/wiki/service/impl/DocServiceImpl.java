@@ -20,6 +20,7 @@ import com.unbeaten.wiki.util.CopyUtil;
 import com.unbeaten.wiki.util.RedisUtil;
 import com.unbeaten.wiki.util.RequestContext;
 import com.unbeaten.wiki.util.SnowFlake;
+import com.unbeaten.wiki.websocket.WebSocketServer;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
     @Resource
     private RedisUtil redisUtil;
+
+    @Resource
+    private WebSocketServer webSocketServe;
 
     private static final Logger LOG = LoggerFactory.getLogger(DocServiceImpl.class);
 
@@ -138,6 +142,10 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         } else {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
         }
+
+        //推送消息
+        Doc docDb = docMapper.selectById(id);
+        webSocketServe.sendInfo("【"+docDb.getName()+"】被点赞!");
     }
 
     public void updateEbookInfo(){

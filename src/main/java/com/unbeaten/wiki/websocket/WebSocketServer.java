@@ -14,8 +14,7 @@ import java.util.HashMap;
 @ServerEndpoint("/ws/{token}")
 public class WebSocketServer {
     private static final Logger LOG = LoggerFactory.getLogger(WebSocketServer.class);
-
-    /**
+     /**
      * 每个客户端一个token
      */
     private String token = "";
