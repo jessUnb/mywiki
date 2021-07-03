@@ -121,6 +121,11 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         }
     }
 
+    @Override
+    public void vote(Long id) {
+        docMapperCust.increaseVoteCount(id);
+    }
+
     public void delete(List<String> ids) {
         docMapper.deleteBatchIds(ids);
     }

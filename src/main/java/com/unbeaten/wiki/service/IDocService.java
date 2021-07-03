@@ -26,4 +26,6 @@ public interface IDocService extends IService<Doc> {
     void delete(Long id);
 
     String findContent(Long id);
+
+    void vote(Long id);
 }
