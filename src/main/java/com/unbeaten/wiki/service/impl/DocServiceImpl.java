@@ -6,6 +6,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.unbeaten.wiki.domain.Content;
 import com.unbeaten.wiki.domain.Doc;
+import com.unbeaten.wiki.exception.BusinessException;
+import com.unbeaten.wiki.exception.BusinessExceptionCode;
 import com.unbeaten.wiki.mapper.ContentMapper;
 import com.unbeaten.wiki.mapper.DocMapper;
 import com.unbeaten.wiki.mapper.DocMapperCust;
@@ -15,6 +17,8 @@ import com.unbeaten.wiki.resp.DocQueryResp;
 import com.unbeaten.wiki.resp.PageResp;
 import com.unbeaten.wiki.service.IDocService;
 import com.unbeaten.wiki.util.CopyUtil;
+import com.unbeaten.wiki.util.RedisUtil;
+import com.unbeaten.wiki.util.RequestContext;
 import com.unbeaten.wiki.util.SnowFlake;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -46,6 +50,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
     @Resource
     private SnowFlake snowFlake;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     private static final Logger LOG = LoggerFactory.getLogger(DocServiceImpl.class);
 
@@ -123,7 +130,14 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
     @Override
     public void vote(Long id) {
-        docMapperCust.increaseVoteCount(id);
+        // docMapperCust.increaseVoteCount(id);
+        // 远程IP+doc.id作为key，24小时内不能重复
+        String ip = RequestContext.getRemoteAddr();
+        if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + ip, 3600 * 24)) {
+            docMapperCust.increaseVoteCount(id);
+        } else {
+            throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
+        }
     }
 
     public void delete(List<String> ids) {
