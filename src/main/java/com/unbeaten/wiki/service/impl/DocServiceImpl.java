@@ -8,6 +8,7 @@ import com.unbeaten.wiki.domain.Content;
 import com.unbeaten.wiki.domain.Doc;
 import com.unbeaten.wiki.mapper.ContentMapper;
 import com.unbeaten.wiki.mapper.DocMapper;
+import com.unbeaten.wiki.mapper.DocMapperCust;
 import com.unbeaten.wiki.req.DocQueryReq;
 import com.unbeaten.wiki.req.DocSaveReq;
 import com.unbeaten.wiki.resp.DocQueryResp;
@@ -36,6 +37,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
 
     @Resource
     private DocMapper docMapper;
+
+    @Resource
+    private DocMapperCust docMapperCust;
 
     @Resource
     private ContentMapper contentMapper;
@@ -84,6 +88,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
         if (ObjectUtils.isEmpty(req.getId())) {
             //新增
             doc.setId(snowFlake.nextId());
+            doc.setViewCount(0);
+            doc.setVoteCount(0);
             docMapper.insert(doc);
 
             content.setId(doc.getId());
@@ -106,6 +112,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
     @Override
     public String findContent(Long id) {
         Content content = contentMapper.selectById(id);
+        //文档阅读数+1
+        docMapperCust.increaseViewCount(id);
         if (ObjectUtils.isEmpty(content)) {
             return "";
         } else {
