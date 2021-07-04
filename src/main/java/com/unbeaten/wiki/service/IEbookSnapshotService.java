@@ -1,6 +1,6 @@
 package com.unbeaten.wiki.service;
 
-import com.unbeaten.wiki.domain.Ebook_snapshot;
+import com.unbeaten.wiki.domain.EbookSnapshot;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author unbeaten
  * @since 2021-07-04
  */
-public interface IEbook_snapshotService extends IService<Ebook_snapshot> {
-
+public interface IEbookSnapshotService{
+    void genSnapshot();
 }
