@@ -1,6 +1,6 @@
 <template>
   <a-layout-header >
-    <div class="logo" />
+    <div class="logo">mywiki</div>
 
     <a-popconfirm
         title="确认退出登录?"
@@ -140,9 +140,19 @@ export default defineComponent({
 </script>
 
 <style>
+.logo {
+  width: 120px;
+  height: 31px;
+  /*background: rgba(255, 255, 255, 0.2);*/
+  /*margin: 16px 28px 16px 0;*/
+  float: left;
+  color: white;
+  font-size: 18px;
+}
 .login-menu{
   float: right;
   color: white;
   margin-left: 10px;
 }
+
 </style>
