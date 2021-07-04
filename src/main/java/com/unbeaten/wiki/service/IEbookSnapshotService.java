@@ -1,7 +1,10 @@
 package com.unbeaten.wiki.service;
 
+import com.sun.org.glassfish.external.statistics.Statistic;
 import com.unbeaten.wiki.domain.EbookSnapshot;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IEbookSnapshotService{
     void genSnapshot();
+
+    List<Statistic> getStatistic();
 }
