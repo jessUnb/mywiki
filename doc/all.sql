@@ -118,5 +118,6 @@ create table `ebook_snapshot` (
                                   `view_increase` int not null default 0 comment '阅读增长',
                                   `vote_increase` int not null default 0 comment '点赞增长',
                                   primary key (`id`),
+#                                   一个电子书一天只能有一条记录
                                   unique key `ebook_id_date_unique` (`ebook_id`, `date`)
 ) engine=innodb default charset=utf8mb4 comment='电子书快照表';
