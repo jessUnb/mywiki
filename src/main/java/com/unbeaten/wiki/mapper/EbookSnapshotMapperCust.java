@@ -1,6 +1,7 @@
 package com.unbeaten.wiki.mapper;
 
 import com.sun.org.glassfish.external.statistics.Statistic;
+import com.unbeaten.wiki.resp.StatisticResp;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface EbookSnapshotMapperCust{
 
     public void genSnapshot();
 
-    List<Statistic> getStatistic();
+    List<StatisticResp> getStatistic();
 }

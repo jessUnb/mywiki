@@ -30,7 +30,8 @@
 
     </update>
 
-    <select id="getStatistic" resultType="com.sun.org.glassfish.external.statistics.Statistic">
+    <!-- 获取首页数值数据：日期、总阅读数、总点赞数、今日阅读数、今日点赞数 -->
+    <select id="getStatistic" resultType="com.unbeaten.wiki.resp.StatisticResp">
         select
             t1.`date` as `date`,
             sum(t1.view_count) as viewCount,

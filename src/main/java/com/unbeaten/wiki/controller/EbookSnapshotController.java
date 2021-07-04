@@ -3,6 +3,7 @@ package com.unbeaten.wiki.controller;
 
 import com.sun.org.glassfish.external.statistics.Statistic;
 import com.unbeaten.wiki.resp.CommonResp;
+import com.unbeaten.wiki.resp.StatisticResp;
 import com.unbeaten.wiki.service.impl.EbookSnapshotServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,9 @@ public class EbookSnapshotController {
     private EbookSnapshotServiceImpl ebookSnapshotService;
 
     @GetMapping("/get-statistic")
-    public CommonResp getStatistic() {
-        List<Statistic> statisticResp=ebookSnapshotService.getStatistic();
-        CommonResp<List<Statistic>> commonResp = new CommonResp<>();
+    public CommonResp<List<StatisticResp>> getStatistic() {
+        List<StatisticResp> statisticResp = ebookSnapshotService.getStatistic();
+        CommonResp<List<StatisticResp>> commonResp = new CommonResp<>();
         commonResp.setContent(statisticResp);
         return commonResp;
     }
