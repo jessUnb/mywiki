@@ -19,4 +19,6 @@ public interface IEbookSnapshotService{
     void genSnapshot();
 
     List<StatisticResp> getStatistic();
+
+    List<StatisticResp> get30Statistic();
 }
