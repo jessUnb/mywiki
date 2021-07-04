@@ -122,13 +122,6 @@ export default defineComponent({
   name: 'AdminDoc',
   setup() {
     const route = useRoute();
-    console.log("路由：", route);
-    console.log("route.path：", route.path);
-    console.log("route.query：", route.query);
-    console.log("route.param：", route.params);
-    console.log("route.fullPath：", route.fullPath);
-    console.log("route.name：", route.name);
-    console.log("route.meta：", route.meta);
     const param = ref();
     param.value = {};
     const docs = ref();
@@ -308,7 +301,7 @@ export default defineComponent({
       doc.value = Tool.copy(record);
       handleQueryContent()
       // 不能选择当前节点及其所有子孙节点，作为父节点，会使树断开
-      treeSelectData.value = Tool.copy(level1.value);
+      treeSelectData.value = Tool.copy(level1.value)||[];
       setDisable(treeSelectData.value, record.id);
 
       // 为选择树添加一个"无"
@@ -325,7 +318,7 @@ export default defineComponent({
         ebookId: route.query.ebookId
       };
 
-      treeSelectData.value = Tool.copy(level1.value);
+      treeSelectData.value = Tool.copy(level1.value)||[];
 
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
