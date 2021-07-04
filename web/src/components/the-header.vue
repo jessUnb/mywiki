@@ -141,10 +141,10 @@ export default defineComponent({
 
 <style>
 .logo {
-  width: 120px;
+  width: 70px;
   height: 31px;
   /*background: rgba(255, 255, 255, 0.2);*/
-  /*margin: 16px 28px 16px 0;*/
+  /*margin: 0 20px 0 0;*/
   float: left;
   color: white;
   font-size: 18px;
