@@ -39,7 +39,7 @@ public class CategorySaveReq implements Serializable {
     /**
      * 顺序
      */
-    @NotNull(message = "【名称】不能为空")
+    @NotNull(message = "【顺序】不能为空")
     private Integer sort;
 
 
