@@ -184,7 +184,7 @@ export default defineComponent({
 
 /* 和 antdv p 冲突 覆盖掉*/
 .wangeditor blockquote p {
-  font-family: "YouYuan";
+  font-family: "YouYuan",serif;
   margin: 20px 10px !important;
   font-size: 16px !important;
   font-weight: 600;
