@@ -109,9 +109,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, createVNode} from 'vue';
+import {createVNode, defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
-import { message, Modal } from "ant-design-vue";
+import {message, Modal} from "ant-design-vue";
 import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
 import ExclamationCircleOutlined from "@ant-design/icons-vue/ExclamationCircleOutlined";
@@ -356,8 +356,7 @@ export default defineComponent({
     const drawerVisible=ref(false)
     const previewHtml=ref()
     const handlePreviewContent=()=>{
-      const html=editor.txt.html()
-      previewHtml.value=html
+      previewHtml.value=editor.txt.html()
       drawerVisible.value=true
     }
     const onDrawerClose=()=>{
