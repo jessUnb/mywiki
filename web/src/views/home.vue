@@ -63,7 +63,6 @@ import { message } from 'ant-design-vue';
 import {Tool} from "@/util/tool";
 import TheWelcome from '@/components/the-welcome.vue';
 
-const listData: any = [];
 
 export default defineComponent({
   name: 'Home',
@@ -139,12 +138,3 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.ant-avatar {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 8%;
-  margin: 5px 0;
-}
-</style>
