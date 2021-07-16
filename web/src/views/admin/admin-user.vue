@@ -29,14 +29,6 @@
           :loading="loading"
           @change="handleTableChange"
       >
-        <template #cover="{ text: cover }">
-          <div class="myimg">
-            <img v-if="cover" :src="cover" alt="avatar"/>
-          </div>
-        </template>
-        <template v-slot:category="{text,record}">
-          <span>{{ getCategoryName(record.category1Id) }}/{{ getCategoryName(record.category2Id) }}</span>
-        </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
             <a-button type="primary" @click="resetPassword(record)">
@@ -86,7 +78,7 @@
       :confirm-loading="resetModalLoading"
       @ok="handleResetModalOk"
   >
-    <a-form :model="user" :label-col="{ spran: 6 }" :wrapper-col="{ span: 18 }">
+    <a-form :model="user" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
 
       <a-form-item label="新密码" >
         <a-input v-model:value="user.password"/>
@@ -299,22 +291,13 @@ export default defineComponent({
       handleResetModalOk,
       resetPassword,
 
+
+
     }
   }
 });
 </script>
 
-<style scoped>
-.myimg {
-  width: 15%;
-  height: 15%;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-}
-</style>
 
 
 
