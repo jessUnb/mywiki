@@ -168,11 +168,11 @@ export default defineComponent({
         const data = response.data;
         if (data.success) {
           docs.value = data.content;
-          console.log("原始数组：", docs.value);
+
 
           level1.value = [];
           level1.value = Tool.array2Tree(docs.value, 0);
-          console.log("树形结构：", level1);
+
 
           //父文档下拉框初始化，相当于点击新增
           treeSelectData.value=Tool.copy(level1.value)
@@ -215,13 +215,13 @@ export default defineComponent({
      * 将某节点及其子孙节点全部置为disabled
      */
     const setDisable = (treeSelectData: any, id: any) => {
-      // console.log(treeSelectData, id);
+
       // 遍历数组，即遍历某一层节点
       for (let i = 0; i < treeSelectData.length; i++) {
         const node = treeSelectData[i];
         if (node.id === id) {
           // 如果当前节点就是目标节点
-          console.log("disabled", node);
+
           // 将目标节点设置为disabled
           node.disabled = true;
 
@@ -250,13 +250,13 @@ export default defineComponent({
      * 查找整根树枝
      */
     const getDeleteIds = (treeSelectData: any, id: any) => {
-      // console.log(treeSelectData, id);
+
       // 遍历数组，即遍历某一层节点
       for (let i = 0; i < treeSelectData.length; i++) {
         const node = treeSelectData[i];
         if (node.id === id) {
           // 如果当前节点就是目标节点
-          console.log("delete", node);
+
           // 将目标ID放入结果集deleteIds
           // node.disabled = true;
           deleteIds.push(id);

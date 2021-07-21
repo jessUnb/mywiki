@@ -172,7 +172,6 @@ export default defineComponent({
      * 表格点击页码时触发
      */
     const handleTableChange = (pagination: any) => {
-      console.log("看看自带的分页参数都有啥：" + pagination);
       handleQuery({
         page: pagination.current,
         size: pagination.pageSize
@@ -248,11 +247,11 @@ export default defineComponent({
         const data = response.data;
         if (data.success) {
           categorys = data.content;
-          console.log("原始数组：", categorys);
+
 
           level1.value = [];
           level1.value = Tool.array2Tree(categorys, 0);
-          console.log("树形结构：", level1);
+
 
           //加载完分类后，再加载电子书，否则如果分类树加载很慢，则电子书渲染会报错
           handleQuery({

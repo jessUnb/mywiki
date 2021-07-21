@@ -74,7 +74,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 要不要对meta.loginRequire属性做监控拦截
   if (to.matched.some(function (item) {
-    console.log(item, "是否需要登录校验：", item.meta.loginRequire);
     return item.meta.loginRequire
   })) {
     const loginUser = store.state.user;
